@@ -28,17 +28,24 @@ public class Account {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "account")
     List<AccountHistory> history = new ArrayList<>();
 
-    public void withdrawTo(@NonNull Account to, @NonNull BigDecimal value) {
+    public void withdrawTo(@NonNull Account to, @NonNull BigDecimal value, @NonNull Instant timestamp) {
         if (saldo.compareTo(value) < 0) {
             throw new IllegalArgumentException("No enough money...");
         }
+        if (value.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("Cannot move zero or less...");
+        }
 
         saldo = saldo.subtract(value);
-        history.add(new AccountHistory(this, this, to, value, AccountHistory.Operation.REMOVED, Timestamp.from(Instant.now())));
+        history.add(new AccountHistory(this, this, to, value, AccountHistory.Operation.REMOVED, Timestamp.from(timestamp)));
     }
 
-    public void depositFrom(@NonNull Account from, @NonNull BigDecimal value) {
+    public void depositFrom(@NonNull Account from, @NonNull BigDecimal value, @NonNull Instant timestamp) {
+        if (value.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("Cannot move zero or less...");
+        }
+
         saldo = saldo.add(value);
-        history.add(new AccountHistory(this, from, this, value, AccountHistory.Operation.ADDED, Timestamp.from(Instant.now())));
+        history.add(new AccountHistory(this, from, this, value, AccountHistory.Operation.ADDED, Timestamp.from(timestamp)));
     }
 }

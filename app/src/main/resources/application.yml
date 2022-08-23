@@ -9,7 +9,6 @@ spring:
       hibernate:
         jdbc:
           time_zone: UTC
-    #defer-datasource-initialization: true
     hibernate:
       ddl-auto: validate #create-drop
     database-platform: org.hibernate.dialect.PostgreSQLDialect
