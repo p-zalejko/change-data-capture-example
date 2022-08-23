@@ -22,7 +22,7 @@ public class Account {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "accountDetails_id", nullable = false)
-     @Setter(AccessLevel.MODULE)
+    @Setter(AccessLevel.MODULE)
     AccountDetails accountDetails;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "account")
@@ -34,11 +34,10 @@ public class Account {
         }
 
         saldo = saldo.subtract(value);
-
         history.add(new AccountHistory(this, this, to, value, AccountHistory.Operation.REMOVED, Timestamp.from(Instant.now())));
     }
 
-    public void depositFrom(Account from, BigDecimal value) {
+    public void depositFrom(@NonNull Account from, @NonNull BigDecimal value) {
         saldo = saldo.add(value);
         history.add(new AccountHistory(this, from, this, value, AccountHistory.Operation.ADDED, Timestamp.from(Instant.now())));
     }

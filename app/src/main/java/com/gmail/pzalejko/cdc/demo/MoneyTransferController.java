@@ -1,7 +1,5 @@
 package com.gmail.pzalejko.cdc.demo;
 
-import com.gmail.pzalejko.cdc.demo.domain.AccountDetails;
-import com.gmail.pzalejko.cdc.demo.domain.AccountDetailsRepository;
 import com.gmail.pzalejko.cdc.demo.domain.AccountRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -10,12 +8,9 @@ import java.math.BigDecimal;
 
 @RestController
 @RequiredArgsConstructor
-public class TransferController {
+public class MoneyTransferController {
 
     private final AccountRepository accountRepository;
-
-
-
 
     @PostMapping("/accounts/{clientId}/{id}/sendMoney")
     void sendMoney(@PathVariable long id, @RequestBody SendMoneyDto dto) {

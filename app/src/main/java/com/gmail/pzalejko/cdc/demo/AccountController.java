@@ -19,11 +19,6 @@ public class AccountController {
         return accountDetailsRepository.save(newAccount);
     }
 
-    @GetMapping("/accounts")
-    List<AccountDetails> getAccountDetails() {
-        return accountDetailsRepository.findAll();
-    }
-
     @GetMapping("/accounts/{clientId}")
     AccountDetails getAccountDetails(@PathVariable long clientId) {
         return accountDetailsRepository.findById(clientId).orElseThrow();
