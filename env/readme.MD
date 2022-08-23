@@ -5,7 +5,7 @@ curl -i -X POST \
    -H "Content-Type:application/json" \
    -d \
 '{
-  "name": "shipments-connector",  
+  "name": "demo-pg-connector",  
   "config": {
     "connector.class": "io.debezium.connector.postgresql.PostgresConnector", 
     "plugin.name": "pgoutput",
