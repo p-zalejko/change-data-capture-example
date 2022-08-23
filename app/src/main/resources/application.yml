@@ -1,0 +1,15 @@
+spring:
+  sql.init.mode: always
+  datasource:
+    url: jdbc:postgresql://localhost:5432/demo_db
+    username: demo
+    password: demo
+  jpa:
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+    #defer-datasource-initialization: true
+    hibernate:
+      ddl-auto: validate #create-drop
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
