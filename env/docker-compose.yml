@@ -48,15 +48,26 @@ services:
     ports:
     - 9092:9092
     - 29092:29092
-  kafdrop:
-    image: obsidiandynamics/kafdrop:3.30.0
-    restart: "no"
-    ports:
-      - "9000:9000"
+  akhq:
+    image: tchiotludo/akhq
     environment:
-      KAFKA_BROKERCONNECT: "kafka:9092"
-      JVM_OPTS: "-Xms16M -Xmx48M -Xss180K -XX:-TieredCompilation -XX:+UseStringDeduplication -noverify"
-    depends_on: [kafka]
+      AKHQ_CONFIGURATION: |
+        akhq:
+          connections:
+            docker-kafka-server:
+              properties:
+                bootstrap.servers: "kafka:9092"
+              schema-registry:
+                url: "http://schema-registry:8081"
+              connect:
+                - name: "connect"
+                  url: "http://debezium:8083"
+    ports:
+      - 9001:8080
+    links:
+      - kafka
+      - schema-registry
+
   debezium:
     image: debezium/connect:1.9
     environment:
