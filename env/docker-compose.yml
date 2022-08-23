@@ -36,12 +36,9 @@ services:
     depends_on: [zookeeper]
     environment:
       KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
-      #KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
-
       KAFKA_LISTENERS: EXTERNAL_SAME_HOST://:29092,PLAINTEXT://:9092
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,EXTERNAL_SAME_HOST://localhost:29092
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,EXTERNAL_SAME_HOST:PLAINTEXT
-      #KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
       KAFKA_BROKER_ID: 1
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_JMX_PORT: 9991
@@ -64,10 +61,7 @@ services:
                   url: "http://debezium:8083"
     ports:
       - 9001:8080
-    links:
-      - kafka
-      - schema-registry
-
+    depends_on: [kafka]
   debezium:
     image: debezium/connect:1.9
     environment:
