@@ -38,6 +38,8 @@ public class MoneyTransferController {
         kafkaTemplate.send(KafkaTopicConfiguration.MONEY_TRANSFERRED_TOPIC, Long.toString(id), moneyTransferredEvent);
         kafkaTemplate.send(KafkaTopicConfiguration.ACCOUNT_BALANCE_CHANGED_TOPIC, Long.toString(from.getId()), fromBalanceChanged);
         kafkaTemplate.send(KafkaTopicConfiguration.ACCOUNT_BALANCE_CHANGED_TOPIC, Long.toString(to.getId()), toBalanceChanged);
+
+        // throw new IllegalArgumentException();
     }
 
     record MoneyTransferredEvent(long from, long to, double value, Instant when) {

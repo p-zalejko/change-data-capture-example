@@ -4,6 +4,10 @@ spring:
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      transaction-id-prefix: tx-
+      properties:
+        enable.idempotence: true
+        transactional.id: tran-id-1
   sql.init.mode: always
   datasource:
     url: jdbc:postgresql://localhost:5432/demo_db
