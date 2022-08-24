@@ -8,7 +8,7 @@ import org.springframework.kafka.transaction.KafkaTransactionManager;
 import org.springframework.orm.jpa.JpaTransactionManager;
 
 @Configuration
-public class TransactionConfig {
+class TransactionConfig {
 
     @Bean
     JpaTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
@@ -17,7 +17,7 @@ public class TransactionConfig {
 
     @Bean
     ChainedKafkaTransactionManager<Object, Object> chainedKafkaJpaTransactionManager(KafkaTransactionManager kafkaTransactionManager,
-                                                                             JpaTransactionManager transactionManager) {
+                                                                                     JpaTransactionManager transactionManager) {
         return new ChainedKafkaTransactionManager<>(kafkaTransactionManager, transactionManager);
     }
 }

@@ -15,7 +15,7 @@ import java.time.Instant;
 public class MoneyTransferController {
 
     private final AccountRepository accountRepository;
-    private final KafkaTemplate<String, MoneyTransferredEvent> kafkaTemplate;
+    private final KafkaTemplate<String, Object> kafkaTemplate;
 
     @PostMapping("/accounts/{clientId}/{id}/sendMoney")
     @Transactional("chainedKafkaJpaTransactionManager")
@@ -31,12 +31,21 @@ public class MoneyTransferController {
         accountRepository.save(from);
         accountRepository.save(to);
 
-        var event = new MoneyTransferredEvent(id, dto.to, dto.value, timestamp);
-        kafkaTemplate.send(KafkaTopicConfiguration.MONEY_TRANSFERRED_TOPIC, Long.toString(id), event);
+        var moneyTransferredEvent = new MoneyTransferredEvent(from.getId(), to.getId(), dto.value, timestamp);
+        var fromBalanceChanged = new AccountBalanceChangedEvent(from.getId(), from.getBalance().doubleValue(), timestamp);
+        var toBalanceChanged = new AccountBalanceChangedEvent(to.getId(), to.getBalance().doubleValue(), timestamp);
+
+        kafkaTemplate.send(KafkaTopicConfiguration.MONEY_TRANSFERRED_TOPIC, Long.toString(id), moneyTransferredEvent);
+        kafkaTemplate.send(KafkaTopicConfiguration.ACCOUNT_BALANCE_CHANGED_TOPIC, Long.toString(from.getId()), fromBalanceChanged);
+        kafkaTemplate.send(KafkaTopicConfiguration.ACCOUNT_BALANCE_CHANGED_TOPIC, Long.toString(to.getId()), toBalanceChanged);
     }
 
     record MoneyTransferredEvent(long from, long to, double value, Instant when) {
     }
+
+    record AccountBalanceChangedEvent(long accountId, double value, Instant when) {
+    }
+
 
     record SendMoneyDto(long to, double value) {
     }

@@ -4,7 +4,7 @@ Content-Type: application/json
 {
   "name": "Jack",
   "surname": "Sparrow",
-  "initSaldo": 5000
+  "initBalance": 5000
 }
 
 ###
@@ -15,7 +15,7 @@ Content-Type: application/json
 {
   "name": "Hector",
   "surname": "Barbossa",
-  "initSaldo": 3000
+  "initBalance": 3000
 }
 
 ###

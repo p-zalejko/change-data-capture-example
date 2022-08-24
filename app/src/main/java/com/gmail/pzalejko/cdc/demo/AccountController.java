@@ -15,7 +15,7 @@ public class AccountController {
 
     @PostMapping("/accounts")
     AccountOwner createAccount(@RequestBody CreateAccountDto dto) {
-        var newAccount = AccountOwner.newAccount(dto.name, dto.surname, BigDecimal.valueOf(dto.initSaldo));
+        var newAccount = AccountOwner.newAccount(dto.name, dto.surname, BigDecimal.valueOf(dto.initBalance));
         return accountOwnerRepository.save(newAccount);
     }
 
@@ -24,6 +24,6 @@ public class AccountController {
         return accountOwnerRepository.findById(clientId).orElseThrow();
     }
 
-    record CreateAccountDto(String name, String surname, double initSaldo) {
+    record CreateAccountDto(String name, String surname, double initBalance) {
     }
 }

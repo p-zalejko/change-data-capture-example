@@ -8,7 +8,7 @@ CREATE TABLE public.account_owner (
 
 CREATE TABLE public.account (
                                 id bigserial NOT NULL,
-                                saldo numeric(38, 2) NULL,
+                                balance numeric(38, 2) NULL,
                                 account_owner_id int8 NOT NULL,
                                 CONSTRAINT account_pkey PRIMARY KEY (id),
                                 CONSTRAINT fk7p4g2vswnkoqu6ce95989u8pp FOREIGN KEY (account_owner_id) REFERENCES public.account_owner(id)

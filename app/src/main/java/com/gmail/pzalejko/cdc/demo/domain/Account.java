@@ -2,6 +2,7 @@ package com.gmail.pzalejko.cdc.demo.domain;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 
@@ -14,18 +15,19 @@ import java.util.List;
 @Entity
 public class Account {
 
-    static Account openNewAccount(@NonNull AccountOwner owner, @NonNull BigDecimal initSaldo) {
+    static Account openNewAccount(@NonNull AccountOwner owner, @NonNull BigDecimal initBalance) {
         var account = new Account();
-        account.saldo = initSaldo;
+        account.balance = initBalance;
         account.accountOwner = owner;
         return account;
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Getter
     private Long id;
-
-    private BigDecimal saldo = BigDecimal.ZERO;
+    @Getter
+    private BigDecimal balance = BigDecimal.ZERO;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "accountOwner_id", nullable = false)
@@ -36,14 +38,14 @@ public class Account {
     private List<AccountHistory> history = new ArrayList<>();
 
     public void withdrawTo(@NonNull Account to, @NonNull BigDecimal value, @NonNull Instant timestamp) {
-        if (saldo.compareTo(value) < 0) {
+        if (balance.compareTo(value) < 0) {
             throw new IllegalArgumentException("No enough money...");
         }
         if (value.compareTo(BigDecimal.ZERO) <= 0) {
             throw new IllegalArgumentException("Cannot move zero or less...");
         }
 
-        saldo = saldo.subtract(value);
+        balance = balance.subtract(value);
         history.add(new AccountHistory(this, this, to, value, AccountHistory.Operation.REMOVED, Timestamp.from(timestamp)));
     }
 
@@ -52,7 +54,7 @@ public class Account {
             throw new IllegalArgumentException("Cannot move zero or less...");
         }
 
-        saldo = saldo.add(value);
+        balance = balance.add(value);
         history.add(new AccountHistory(this, from, this, value, AccountHistory.Operation.ADDED, Timestamp.from(timestamp)));
     }
 }

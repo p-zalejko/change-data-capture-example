@@ -14,12 +14,12 @@ import java.util.List;
 @Data
 public class AccountOwner {
 
-    public static AccountOwner newAccount(String name, String surname, BigDecimal initSaldo) {
+    public static AccountOwner newAccount(String name, String surname, BigDecimal initBalance) {
         var owner = new AccountOwner();
         owner.setName(name);
         owner.setSurname(surname);
 
-        var account = Account.openNewAccount(owner, initSaldo);
+        var account = Account.openNewAccount(owner, initBalance);
         owner.getAccounts().add(account);
 
         return owner;
