@@ -1,6 +1,18 @@
+# Clering the environment
+
+```
+docker stop $ (docker ps -a -q)
+docker rm $ (docker ps -a -q)
+docker volume prune
+
+docker-compose down -v --remove-orphans
+
+```
+
 # Registering a connector
 
 ```
+
 curl -i -X POST \
    -H "Content-Type:application/json" \
    -d \
@@ -15,11 +27,10 @@ curl -i -X POST \
     "database.password": "demo", 
     "database.dbname" : "demo_db", 
     "database.server.name": "postgres", 
-    "table.include.list": "public.account" 
+    "table.include.list": "public.account_owner,public.account,public.account_history" 
   }
 }' \
  'http://localhost:8083/connectors'
-
 
 
 ```

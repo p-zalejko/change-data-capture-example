@@ -1,37 +1,19 @@
--- public.account_details definition
-
--- Drop table
-
--- DROP TABLE public.account_details;
-
-CREATE TABLE public.account_details (
+CREATE TABLE public.account_owner (
                                         id bigserial NOT NULL,
                                         name varchar(255) NULL,
                                         surname varchar(255) NULL,
-                                        CONSTRAINT account_details_pkey PRIMARY KEY (id)
+                                        CONSTRAINT account_owner_pkey PRIMARY KEY (id)
 );
 
-
--- public.account definition
-
--- Drop table
-
--- DROP TABLE public.account;
 
 CREATE TABLE public.account (
                                 id bigserial NOT NULL,
                                 saldo numeric(38, 2) NULL,
-                                account_details_id int8 NOT NULL,
+                                account_owner_id int8 NOT NULL,
                                 CONSTRAINT account_pkey PRIMARY KEY (id),
-                                CONSTRAINT fk7p4g2vswnkoqu6ce95989u8pp FOREIGN KEY (account_details_id) REFERENCES public.account_details(id)
+                                CONSTRAINT fk7p4g2vswnkoqu6ce95989u8pp FOREIGN KEY (account_owner_id) REFERENCES public.account_owner(id)
 );
 
-
--- public.account_history definition
-
--- Drop table
-
--- DROP TABLE public.account_history;
 
 CREATE TABLE public.account_history (
                                         id bigserial NOT NULL,

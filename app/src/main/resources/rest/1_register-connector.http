@@ -1,0 +1,20 @@
+POST http://localhost:8083/connectors
+Content-Type: application/json
+
+{
+  "name": "demo-pg-connector",
+  "config": {
+    "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
+    "plugin.name": "pgoutput",
+    "database.hostname": "postgres",
+    "database.port": "5432",
+    "database.user": "demo",
+    "database.password": "demo",
+    "database.dbname" : "demo_db",
+    "database.server.name": "postgres",
+    "table.include.list": "public.account_owner,public.account,public.account_history"
+  }
+}
+
+###
+

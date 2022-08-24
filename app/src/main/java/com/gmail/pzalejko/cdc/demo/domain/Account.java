@@ -14,19 +14,26 @@ import java.util.List;
 @Entity
 public class Account {
 
+    static Account openNewAccount(@NonNull AccountOwner owner, @NonNull BigDecimal initSaldo) {
+        var account = new Account();
+        account.saldo = initSaldo;
+        account.accountOwner = owner;
+        return account;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
-    BigDecimal saldo = BigDecimal.ZERO;
+    private BigDecimal saldo = BigDecimal.ZERO;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "accountDetails_id", nullable = false)
+    @JoinColumn(name = "accountOwner_id", nullable = false)
     @Setter(AccessLevel.MODULE)
-    AccountDetails accountDetails;
+    private AccountOwner accountOwner;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "account")
-    List<AccountHistory> history = new ArrayList<>();
+    private List<AccountHistory> history = new ArrayList<>();
 
     public void withdrawTo(@NonNull Account to, @NonNull BigDecimal value, @NonNull Instant timestamp) {
         if (saldo.compareTo(value) < 0) {

@@ -13,19 +13,19 @@ public class AccountHistory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "account_id", nullable = false)
-    Account account;
+    private Account account;
     @ManyToOne(fetch = FetchType.LAZY, optional = true)
-    Account from;
+    private Account from;
     @ManyToOne(fetch = FetchType.LAZY, optional = true)
-    Account to;
+    private Account to;
 
-    BigDecimal value;
-    Operation operation;
-    Timestamp timestamp;
+    private BigDecimal value;
+    private Operation operation;
+    private Timestamp timestamp;
 
     public AccountHistory(Account account, Account from, Account to, BigDecimal value, Operation operation, Timestamp timestamp) {
         this.account = account;

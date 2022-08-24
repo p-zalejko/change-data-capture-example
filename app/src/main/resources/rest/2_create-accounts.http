@@ -1,0 +1,21 @@
+POST http://localhost:8080/accounts
+Content-Type: application/json
+
+{
+  "name": "Jack",
+  "surname": "Sparrow",
+  "initSaldo": 5000
+}
+
+###
+
+POST http://localhost:8080/accounts
+Content-Type: application/json
+
+{
+  "name": "Hector",
+  "surname": "Barbossa",
+  "initSaldo": 3000
+}
+
+###
