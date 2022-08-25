@@ -4,11 +4,11 @@ import org.apache.avro.generic.GenericRecord;
 import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.StreamsBuilder;
-import org.apache.kafka.streams.kstream.Consumed;
 import org.apache.kafka.streams.kstream.ForeachAction;
 import org.apache.kafka.streams.kstream.KStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import postgres.demo.account.Envelope;
 
 @Component
 public class WordCountProcessor {
@@ -17,13 +17,13 @@ public class WordCountProcessor {
 
     @Autowired
     void buildPipeline(StreamsBuilder streamsBuilder) {
-        KStream<String, String> messageStream = streamsBuilder
-                .stream("moneyTransferred", Consumed.with(STRING_SERDE, STRING_SERDE));
+        KStream<GenericRecord, Envelope> messageStream = streamsBuilder
+                .stream("postgres.demo.account");
 
         messageStream
-                .peek(new ForeachAction<String, String>() {
+                .peek(new ForeachAction<GenericRecord, Envelope>() {
                     @Override
-                    public void apply(String key, String value) {
+                    public void apply(GenericRecord key, Envelope value) {
                         System.out.println(value);
                     }
                 })
