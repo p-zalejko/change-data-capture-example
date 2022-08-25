@@ -33,7 +33,7 @@ public class WordCountProcessor {
 // https://stackoverflow.com/questions/56939323/kafka-stream-dsl-non-key-join-current-workaround-explained
     // https://www.confluent.io/blog/data-enrichment-with-kafka-streams-foreign-key-joins/
     // https://stackoverflow.com/questions/62884230/ktable-ktable-foreign-key-join-not-producing-all-messages-when-topics-have-more
-
+//    https://debezium.io/blog/2021/03/18/understanding-non-key-joins-with-quarkus-extension-for-kafka-streams/
 
     void ddd(StreamsBuilder builder){
         KStream<String, String> account = builder.stream("postgres.demo.account");
