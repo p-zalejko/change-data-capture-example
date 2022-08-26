@@ -6,13 +6,14 @@ import io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.common.serialization.Serde;
+import org.apache.kafka.common.serialization.Serdes;
+import org.apache.kafka.streams.KeyValue;
 import org.apache.kafka.streams.StreamsBuilder;
-import org.apache.kafka.streams.kstream.Consumed;
-import org.apache.kafka.streams.kstream.KTable;
-import org.apache.kafka.streams.kstream.Produced;
-import org.apache.kafka.streams.kstream.ValueJoiner;
+import org.apache.kafka.streams.kstream.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import postgres.demo.account.Envelope;
+import postgres.demo.account.Key;
 
 import java.util.function.Function;
 
@@ -32,22 +33,31 @@ public class AccountChangesProcessor {
         SpecificAvroSerde<postgres.demo.account_owner.Key> accountOwnerKeySerde = serdeFactory.getSpecificAvroSerde();
         SpecificAvroSerde<AccountAggregate> accountAggregateSerde = serdeFactory.getSpecificAvroSerde();
 
-        builder.stream("postgres.demo.account", Consumed.with(accountKeySerde, accountSerde))
-                .selectKey((key, value) -> key.getId()) // value.getAfter().getAccountOwnerId()
-                .to("demo.ks.account", Produced.with(longKeySerde, accountSerde));
+        KTable<Long, postgres.demo.account.Envelope> accounts = builder
+                .stream(
+                        "postgres.demo.account",
+                        Consumed.with(accountKeySerde, accountSerde)
+                ).map(new KeyValueMapper<Key, Envelope, KeyValue<Long, Envelope>>() {
+                    @Override
+                    public KeyValue<Long, Envelope> apply(Key key, Envelope value) {
+                        return KeyValue.pair(key.getId(), value); // we could change the key to have the same...  value.getAfter().getAccountOwnerId()
+                    }
+                })
+                .toTable(Materialized.with(longKeySerde, accountSerde));
 
-        builder.stream("postgres.demo.account_owner", Consumed.with(accountOwnerKeySerde, accountOwnerSerde))
-                .selectKey((key, value) -> key.getId())
-                .to("demo.ks.account-owner", Produced.with(longKeySerde, accountOwnerSerde));
 
-        KTable<Long, postgres.demo.account.Envelope> accounts = builder.table(
-                "demo.ks.account",
-                Consumed.with(longKeySerde, accountSerde)
-        );
-        KTable<Long, postgres.demo.account_owner.Envelope> accountOwners = builder.table(
-                "demo.ks.account-owner",
-                Consumed.with(longKeySerde, accountOwnerSerde)
-        );
+        KTable<Long, postgres.demo.account_owner.Envelope> accountOwners = builder
+                .stream(
+                        "postgres.demo.account_owner",
+                        Consumed.with(accountOwnerKeySerde, accountOwnerSerde)
+                )
+                .map(new KeyValueMapper<postgres.demo.account_owner.Key, postgres.demo.account_owner.Envelope, KeyValue<Long, postgres.demo.account_owner.Envelope>>() {
+                    @Override
+                    public KeyValue<Long, postgres.demo.account_owner.Envelope> apply(postgres.demo.account_owner.Key key, postgres.demo.account_owner.Envelope value) {
+                        return KeyValue.pair(key.getId(), value);
+                    }
+                })
+                .toTable(Materialized.with(longKeySerde, accountOwnerSerde));
 
         // join a table and a table with a foreign key
         // https://developer.confluent.io/tutorials/foreign-key-joins/kstreams.html
@@ -58,8 +68,8 @@ public class AccountChangesProcessor {
                 .join(accountOwners, getAlbumId, joiner);
 
         aggregatedData.toStream()
-                .peek((key, value) -> log.info("Aggregated: {}", value))
-                .to("demo.accountState", Produced.with(longKeySerde, accountAggregateSerde));
+                .peek((key, value) -> log.info("Account balance captured: {}", value))
+                .to("demo.accountBalanceState", Produced.with(longKeySerde, accountAggregateSerde));
     }
 
     static class AccountAggregateJoiner implements ValueJoiner<postgres.demo.account.Envelope, postgres.demo.account_owner.Envelope, AccountAggregate> {
