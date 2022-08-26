@@ -38,7 +38,7 @@ import static io.confluent.kafka.serializers.AbstractKafkaSchemaSerDeConfig.SCHE
 public class FkJoinTableToTable {
 
 
-	public Properties buildStreamsProperties(Properties envProps) {
+    public Properties buildStreamsProperties(Properties envProps) {
         Properties props = new Properties();
 
         props.put(StreamsConfig.APPLICATION_ID_CONFIG, envProps.getProperty("application.id"));
@@ -67,7 +67,7 @@ public class FkJoinTableToTable {
         Function<TrackPurchase, Long> getAlbumId = TrackPurchase::getAlbumId;
         final KTable<Long, MusicInterest> musicInterestTable = trackPurchases.join(albums,
                 getAlbumId,
-                                                                             trackJoiner);
+                trackJoiner);
 
         musicInterestTable.toStream().to(musicInterestTopic, Produced.with(longSerde, musicInterestSerde));
 
@@ -80,10 +80,10 @@ public class FkJoinTableToTable {
         final KafkaAvroSerializer serializer = new KafkaAvroSerializer();
         final Map<String, String> config = new HashMap<>();
         config.put(SCHEMA_REGISTRY_URL_CONFIG,
-                   envProps.getProperty("schema.registry.url"));
+                envProps.getProperty("schema.registry.url"));
         deserializer.configure(config, isKey);
         serializer.configure(config, isKey);
-        return (Serde<T>)Serdes.serdeFrom(serializer, deserializer);
+        return (Serde<T>) Serdes.serdeFrom(serializer, deserializer);
     }
 
     static <T extends SpecificRecord> SpecificAvroSerde<T> getSpecificAvroSerde(final Properties envProps) {
@@ -91,7 +91,7 @@ public class FkJoinTableToTable {
 
         final HashMap<String, String> serdeConfig = new HashMap<>();
         serdeConfig.put(SCHEMA_REGISTRY_URL_CONFIG,
-                        envProps.getProperty("schema.registry.url"));
+                envProps.getProperty("schema.registry.url"));
 
         specificAvroSerde.configure(serdeConfig, false);
         return specificAvroSerde;

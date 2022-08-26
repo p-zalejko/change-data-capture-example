@@ -1,14 +1,16 @@
 package com.gmail.pzalejko.cdc.kafkastreamsdemo.processor;
 
 import com.gmail.pzalejko.cdc.AccountAggregate;
-import com.gmail.pzalejko.cdc.AccountAggregateKey;
 import com.gmail.pzalejko.cdc.kafkastreamsdemo.config.KafkaStreamSerdeFactory;
 import io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde;
 import lombok.RequiredArgsConstructor;
-import org.apache.avro.generic.GenericRecord;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.streams.StreamsBuilder;
-import org.apache.kafka.streams.kstream.*;
+import org.apache.kafka.streams.kstream.Consumed;
+import org.apache.kafka.streams.kstream.KTable;
+import org.apache.kafka.streams.kstream.Produced;
+import org.apache.kafka.streams.kstream.ValueJoiner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,59 +18,48 @@ import java.util.function.Function;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class AccountChangesProcessor {
 
     private final KafkaStreamSerdeFactory serdeFactory;
 
     @Autowired
     void buildPipeline(StreamsBuilder builder) {
-//        KStream<GenericRecord, Envelope> messageStream = streamsBuilder.stream("postgres.demo.account");
-//
-//        messageStream
-//                .peek(new ForeachAction<GenericRecord, Envelope>() {
-//                    @Override
-//                    public void apply(GenericRecord key, Envelope value) {
-//                        System.out.println(value);
-//                    }
-//                })
-//                .to("output-topic");
-
-
-        Serde<GenericRecord> keySerde = serdeFactory.getGenericServer();
+        Serde<Long> longKeySerde = serdeFactory.getPrimitiveAvroSerde(true);
         SpecificAvroSerde<postgres.demo.account.Envelope> accountSerde = serdeFactory.getSpecificAvroSerde();
+        SpecificAvroSerde<postgres.demo.account.Key> accountKeySerde = serdeFactory.getSpecificAvroSerde();
         SpecificAvroSerde<postgres.demo.account_owner.Envelope> accountOwnerSerde = serdeFactory.getSpecificAvroSerde();
+        SpecificAvroSerde<postgres.demo.account_owner.Key> accountOwnerKeySerde = serdeFactory.getSpecificAvroSerde();
         SpecificAvroSerde<AccountAggregate> accountAggregateSerde = serdeFactory.getSpecificAvroSerde();
 
-        KTable<GenericRecord, postgres.demo.account.Envelope> accounts = builder.table(
-                "postgres.demo.account",
-                Consumed.with(keySerde, accountSerde)
+        builder.stream("postgres.demo.account", Consumed.with(accountKeySerde, accountSerde))
+                .selectKey((key, value) -> key.getId()) // value.getAfter().getAccountOwnerId()
+                .to("postgres.demo.account-ks", Produced.with(longKeySerde, accountSerde));
+
+        builder.stream("postgres.demo.account_owner", Consumed.with(accountOwnerKeySerde, accountOwnerSerde))
+                .selectKey((key, value) -> key.getId())
+                .to("postgres.demo.account-owner-ks", Produced.with(longKeySerde, accountOwnerSerde));
+
+        KTable<Long, postgres.demo.account.Envelope> accounts = builder.table(
+                "postgres.demo.account-ks",
+                Consumed.with(longKeySerde, accountSerde)
         );
-        KTable<GenericRecord, postgres.demo.account_owner.Envelope> accountOwners = builder.table(
-                "postgres.demo.account_owner",
-                Consumed.with(keySerde, accountOwnerSerde)
+        KTable<Long, postgres.demo.account_owner.Envelope> accountOwners = builder.table(
+                "postgres.demo.account-owner-ks",
+                Consumed.with(longKeySerde, accountOwnerSerde)
         );
 
         // join a table and a table with a foreign key
         // https://developer.confluent.io/tutorials/foreign-key-joins/kstreams.html
         // https://www.confluent.io/blog/data-enrichment-with-kafka-streams-foreign-key-joins/
         final AccountAggregateJoiner joiner = new AccountAggregateJoiner();
-        final Function<postgres.demo.account.Envelope, GenericRecord> getAlbumId = a -> AccountAggregateKey
-                .newBuilder()
-                .setAccountOwnerId(a.getAfter().getAccountOwnerId())
-                .build();
-        final KTable<GenericRecord, AccountAggregate> aggregatedData = accounts
+        final Function<postgres.demo.account.Envelope, Long> getAlbumId = a -> a.getAfter().getAccountOwnerId();
+        KTable<Long, AccountAggregate> aggregatedData = accounts
                 .join(accountOwners, getAlbumId, joiner);
 
         aggregatedData.toStream()
-                .peek(new ForeachAction<GenericRecord, AccountAggregate>() {
-                    @Override
-                    public void apply(GenericRecord key, AccountAggregate value) {
-                        System.out.println(value);
-                    }
-                })
-                .to("accountState",
-                        Produced.with(keySerde, accountAggregateSerde)
-                );
+                .peek((key, value) -> log.info("Aggregated: {}", value))
+                .to("accountState", Produced.with(longKeySerde, accountAggregateSerde));
     }
 
     static class AccountAggregateJoiner implements ValueJoiner<postgres.demo.account.Envelope, postgres.demo.account_owner.Envelope, AccountAggregate> {
@@ -83,11 +74,4 @@ public class AccountChangesProcessor {
                     .build();
         }
     }
-
-    // https://developer.confluent.io/tutorials/foreign-key-joins/kstreams.html
-// https://stackoverflow.com/questions/56939323/kafka-stream-dsl-non-key-join-current-workaround-explained
-    // https://www.confluent.io/blog/data-enrichment-with-kafka-streams-foreign-key-joins/
-    // https://stackoverflow.com/questions/62884230/ktable-ktable-foreign-key-join-not-producing-all-messages-when-topics-have-more
-//    https://debezium.io/blog/2021/03/18/understanding-non-key-joins-with-quarkus-extension-for-kafka-streams/
-
 }
