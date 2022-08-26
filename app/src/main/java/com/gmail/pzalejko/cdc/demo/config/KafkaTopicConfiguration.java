@@ -8,8 +8,8 @@ import org.springframework.kafka.config.TopicBuilder;
 @Configuration
 public class KafkaTopicConfiguration {
 
-    public static final String MONEY_TRANSFERRED_TOPIC = "moneyTransferred";
-    public static final String ACCOUNT_BALANCE_CHANGED_TOPIC = "accountBalanceChanged";
+    public static final String MONEY_TRANSFERRED_TOPIC = "demo.moneyTransferred";
+    public static final String ACCOUNT_BALANCE_CHANGED_TOPIC = "demo.accountBalanceChanged";
     @Bean
     NewTopic moneyTransferredTopic() {
         return TopicBuilder.name(MONEY_TRANSFERRED_TOPIC)

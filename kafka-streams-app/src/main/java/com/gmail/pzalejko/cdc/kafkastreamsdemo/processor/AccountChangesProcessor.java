@@ -34,18 +34,18 @@ public class AccountChangesProcessor {
 
         builder.stream("postgres.demo.account", Consumed.with(accountKeySerde, accountSerde))
                 .selectKey((key, value) -> key.getId()) // value.getAfter().getAccountOwnerId()
-                .to("postgres.demo.account-ks", Produced.with(longKeySerde, accountSerde));
+                .to("demo.ks.account", Produced.with(longKeySerde, accountSerde));
 
         builder.stream("postgres.demo.account_owner", Consumed.with(accountOwnerKeySerde, accountOwnerSerde))
                 .selectKey((key, value) -> key.getId())
-                .to("postgres.demo.account-owner-ks", Produced.with(longKeySerde, accountOwnerSerde));
+                .to("demo.ks.account-owner", Produced.with(longKeySerde, accountOwnerSerde));
 
         KTable<Long, postgres.demo.account.Envelope> accounts = builder.table(
-                "postgres.demo.account-ks",
+                "demo.ks.account",
                 Consumed.with(longKeySerde, accountSerde)
         );
         KTable<Long, postgres.demo.account_owner.Envelope> accountOwners = builder.table(
-                "postgres.demo.account-owner-ks",
+                "demo.ks.account-owner",
                 Consumed.with(longKeySerde, accountOwnerSerde)
         );
 
@@ -59,7 +59,7 @@ public class AccountChangesProcessor {
 
         aggregatedData.toStream()
                 .peek((key, value) -> log.info("Aggregated: {}", value))
-                .to("accountState", Produced.with(longKeySerde, accountAggregateSerde));
+                .to("demo.accountState", Produced.with(longKeySerde, accountAggregateSerde));
     }
 
     static class AccountAggregateJoiner implements ValueJoiner<postgres.demo.account.Envelope, postgres.demo.account_owner.Envelope, AccountAggregate> {
