@@ -1,0 +1,23 @@
+{
+  "namespace": "com.gmail.pzalejko.cdc",
+  "type": "record",
+  "name": "AccountAggregate",
+  "fields": [
+    {
+      "name": "account_owner_id",
+      "type": "long"
+    },
+    {
+      "name": "account_id",
+      "type": "long"
+    },
+    {
+      "name": "name",
+      "type": "string"
+    },
+    {
+      "name": "balance",
+      "type": "double"
+    }
+  ]
+}
