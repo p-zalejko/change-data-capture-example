@@ -1,11 +1,10 @@
-package com.gmail.pzalejko.cdc.demo.domain;
+package com.gmail.pzalejko.cdc.demo.account.domain;
 
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +13,7 @@ import java.util.List;
 @Data
 public class AccountOwner {
 
-    public static AccountOwner newAccount(String name, String surname, BigDecimal initBalance) {
+    static AccountOwner newAccountOwner(String name, String surname, BigDecimal initBalance) {
         var owner = new AccountOwner();
         owner.setName(name);
         owner.setSurname(surname);
@@ -34,4 +33,9 @@ public class AccountOwner {
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "accountOwner")
     List<Account> accounts = new ArrayList<>();
+
+    public String getFullName() {
+        return String.format("%s %s", name, surname);
+
+    }
 }

@@ -1,4 +1,4 @@
-package com.gmail.pzalejko.cdc.demo.domain;
+package com.gmail.pzalejko.cdc.demo.account.domain;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -32,12 +32,13 @@ public class Account {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "accountOwner_id", nullable = false)
     @Setter(AccessLevel.MODULE)
+    @Getter
     private AccountOwner accountOwner;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "account")
     private List<AccountHistory> history = new ArrayList<>();
 
-    public void withdrawTo(@NonNull Account to, @NonNull BigDecimal value, @NonNull Instant timestamp) {
+    void withdrawTo(@NonNull Account to, @NonNull BigDecimal value, @NonNull Instant timestamp) {
         if (balance.compareTo(value) < 0) {
             throw new IllegalArgumentException("No enough money...");
         }
@@ -49,9 +50,9 @@ public class Account {
         history.add(new AccountHistory(this, this, to, value, AccountHistory.Operation.REMOVED, Timestamp.from(timestamp)));
     }
 
-    public void depositFrom(@NonNull Account from, @NonNull BigDecimal value, @NonNull Instant timestamp) {
+    void depositFrom(@NonNull Account from, @NonNull BigDecimal value, @NonNull Instant timestamp) {
         if (value.compareTo(BigDecimal.ZERO) <= 0) {
-            throw new IllegalArgumentException("Cannot move zero or less...");
+            throw new IllegalArgumentException("Cannot accept zero or less...");
         }
 
         balance = balance.add(value);

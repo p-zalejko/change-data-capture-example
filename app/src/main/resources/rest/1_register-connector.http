@@ -12,7 +12,7 @@ Content-Type: application/json
     "database.password": "demo",
     "database.dbname" : "demo_db",
     "database.server.name": "postgres",
-    "table.include.list": "demo.account_owner,demo.account,demo.account_history"
+    "table.include.list": "demo.account_owner,demo.account,demo.account_history,demo.account_state_cdc"
   }
 }
 

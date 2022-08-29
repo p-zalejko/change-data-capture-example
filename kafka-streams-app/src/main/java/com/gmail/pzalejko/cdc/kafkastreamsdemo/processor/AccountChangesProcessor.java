@@ -61,7 +61,7 @@ public class AccountChangesProcessor {
         // join a table and a table with a foreign key
         // https://developer.confluent.io/tutorials/foreign-key-joins/kstreams.html
         // https://www.confluent.io/blog/data-enrichment-with-kafka-streams-foreign-key-joins/
-        final AccountAggregateJoiner joiner = new AccountAggregateJoiner();
+        final AccountStateJoiner joiner = new AccountStateJoiner();
         final Function<postgres.demo.account.Envelope, Long> getAlbumId = a -> a.getAfter().getAccountOwnerId();
         KTable<Long, AccountAggregate> aggregatedData = accounts
                 .join(accountOwners, getAlbumId, joiner);
@@ -71,7 +71,7 @@ public class AccountChangesProcessor {
                 .to("demo.accountBalanceState", Produced.with(longKeySerde, accountAggregateSerde));
     }
 
-    static class AccountAggregateJoiner implements ValueJoiner<postgres.demo.account.Envelope, postgres.demo.account_owner.Envelope, AccountAggregate> {
+    static class AccountStateJoiner implements ValueJoiner<postgres.demo.account.Envelope, postgres.demo.account_owner.Envelope, AccountAggregate> {
 
         @Override
         public AccountAggregate apply(postgres.demo.account.Envelope value1, postgres.demo.account_owner.Envelope value2) {

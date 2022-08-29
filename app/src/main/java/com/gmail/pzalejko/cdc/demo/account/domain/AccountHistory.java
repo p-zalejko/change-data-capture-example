@@ -1,4 +1,4 @@
-package com.gmail.pzalejko.cdc.demo.domain;
+package com.gmail.pzalejko.cdc.demo.account.domain;
 
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
