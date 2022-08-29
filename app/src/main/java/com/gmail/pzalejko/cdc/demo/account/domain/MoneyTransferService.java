@@ -2,6 +2,8 @@ package com.gmail.pzalejko.cdc.demo.account.domain;
 
 import com.gmail.pzalejko.cdc.demo.cdc.AccountStateCdcService;
 import com.gmail.pzalejko.cdc.demo.config.KafkaTopicConfiguration;
+import com.gmail.pzalejko.cdc.demo.outbox.OutboxEvent;
+import com.gmail.pzalejko.cdc.demo.outbox.OutboxEventDispatcher;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
@@ -19,10 +21,11 @@ public class MoneyTransferService {
     private final AccountRepository accountRepository;
     private final AccountStateCdcService accountStateCdcService;
     private final ApplicationEventPublisher applicationEventPublisher;
+    private final OutboxEventDispatcher outboxEventDispatcher;
     private final KafkaTemplate<String, Object> kafkaTemplate;
 
     // @Transactional
-//    @Transactional("chainedKafkaJpaTransactionManager")
+    @Transactional("chainedKafkaJpaTransactionManager")
     public void sendMoney(long id, @NonNull SendMoneyDto dto) {
         var from = accountRepository.findById(id).orElseThrow();
         var to = accountRepository.findById(dto.to).orElseThrow();
@@ -50,11 +53,17 @@ public class MoneyTransferService {
         applicationEventPublisher.publishEvent(fromBalanceChangedEvent);
         applicationEventPublisher.publishEvent(toBalanceChangedEvent);
 
+
+        outboxEventDispatcher.dispatch(new OutboxEvent<>(Long.toString(moneyTransferredEvent.from), moneyTransferredEvent));
+        outboxEventDispatcher.dispatch(new OutboxEvent<>(Long.toString(fromBalanceChangedEvent.accountId),fromBalanceChangedEvent));
+        outboxEventDispatcher.dispatch(new OutboxEvent<>(Long.toString(toBalanceChangedEvent.accountId),toBalanceChangedEvent));
+
         // throw new RuntimeException();
     }
 
     public record MoneyTransferredEvent(long from, long to, double value, Instant when) {
     }
+
 
     public record AccountBalanceChangedEvent(long accountId, double value, Instant when) {
     }

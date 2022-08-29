@@ -31,6 +31,23 @@ CREATE TABLE demo.account_state_cdc (
 );
 
 
+-- demo.outbox definition
+
+-- Drop table
+
+-- DROP TABLE demo.outbox;
+
+CREATE TABLE demo.outbox (
+                             id uuid NOT NULL,
+                             aggregateid varchar(255) NOT NULL,
+                             aggregatetype varchar(255) NOT NULL,
+                             payload varchar(255) NULL,
+                             "timestamp" timestamptz(6) NULL,
+                             "type" varchar(255) NOT NULL,
+                             CONSTRAINT outbox_pkey PRIMARY KEY (id)
+);
+
+
 -- demo.account definition
 
 -- Drop table
