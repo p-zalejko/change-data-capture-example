@@ -3,7 +3,8 @@
 
 ---
 
-## The worst bank ever (v0.0.1 M1)
+## The worst bank ever
+### v0.0.1 M1
 
 ![title](assets/img/money_transfer_process.png)
 
@@ -47,6 +48,7 @@ Note:
 
 ## Change Data Capture (CDC) - 101
 
+---
 
 ## CDC Tools
 
@@ -59,27 +61,41 @@ Note:
 - DynamoDB
 - Bottled Water(unmaintained)
 
+---
 
 ## Debezium
 
 
+---
+
 ## MySQL - binlog
+
+---
 
 
 ## PostgreSQL - Write-Ahead Logging (WAL)
 
+---
+
 ## MongoDB - opLog
 
+---
+
 ## What is common?
+
+---
 
 ### "Change Streams"
 - solutions for data replication and streaming of changes
 - PostgreSQL -> logical decoding (logical replication)
 - MongoDB -> Change Streams
 
-
+---
 ## Debezium demo
 
 
-
+---
 ## Debezium(CDC) - problems
+
+---
+## 
