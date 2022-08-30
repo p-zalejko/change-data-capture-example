@@ -94,11 +94,14 @@ Note:
 - MongoDB -> Change Streams
 
 ---
+
 ## Debezium demo
 
 
 ---
+
 ## Debezium(CDC) - problems
 
 ---
+
 ## 
