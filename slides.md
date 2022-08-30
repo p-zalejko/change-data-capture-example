@@ -1,4 +1,5 @@
-# Change Data Capture (CDC)
+# Change Data Capture 
+## (CDC)
 
 
 ---
@@ -42,11 +43,13 @@ Note:
 
 ---
 
-## Change Data Capture (CDC)
+# Change Data Capture 
+## (CDC)
 
 ---
 
-## Change Data Capture (CDC) - 101
+## Change Data Capture
+### 101
 
 ---
 
