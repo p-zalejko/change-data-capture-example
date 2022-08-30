@@ -44,7 +44,6 @@ Note:
 ---
 
 # Change Data Capture 
-## (CDC)
 
 ---
 
