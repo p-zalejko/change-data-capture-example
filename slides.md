@@ -69,9 +69,8 @@ Note:
 ---
 
 ## MySQL
-### binlog
 
-> The binary log contains “events” that describe database changes such as table creation operations or changes to table data...
+> The binary log contains "events" that describe database changes such as table creation operations or changes to table data...
 
 [The Binary Log documentation](https://dev.mysql.com/doc/refman/8.0/en/binary-log.html)
 
@@ -79,7 +78,6 @@ Note:
 
 
 ## PostgreSQL
-### Write-Ahead Logging (WAL) & logical decoding feature 
 
 > WAL's central concept is that changes to data files (where tables and indexes reside) must be written only after those changes have been logged, that is, after log records describing the changes have been flushed to permanent storage.
 
