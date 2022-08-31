@@ -72,16 +72,31 @@ Note:
 
 ---
 
-## MySQL - binlog
+## MySQL
+### binlog
+
+> The binary log contains “events” that describe database changes such as table creation operations or changes to table data...
+
+[The Binary Log documentation](https://dev.mysql.com/doc/refman/8.0/en/binary-log.html)
 
 ---
 
 
-## PostgreSQL - Write-Ahead Logging (WAL)
+## PostgreSQL
+### Write-Ahead Logging (WAL) & logical decoding feature 
+
+> WAL's central concept is that changes to data files (where tables and indexes reside) must be written only after those changes have been logged, that is, after log records describing the changes have been flushed to permanent storage.
+
+[Write-Ahead Logging (WAL) documentation](https://www.postgresql.org/docs/current/wal-intro.html)
+
+> Logical decoding is the process of extracting all persistent changes to a database's tables into a coherent, easy to understand format  ... In PostgreSQL, logical decoding is implemented by decoding the contents of the write-ahead log...
+
+[Logical Decoding Concepts documentation](https://www.postgresql.org/docs/current/logicaldecoding-explanation.html)
 
 ---
 
-## MongoDB - opLog
+## MongoDB 
+### opLog & Change Streams
 
 ---
 
