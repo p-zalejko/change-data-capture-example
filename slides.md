@@ -65,10 +65,6 @@ Note:
 - DynamoDB*
 - Bottled Water(unmaintained)
 
----
-
-## Debezium
-
 
 ---
 
@@ -108,6 +104,12 @@ Note:
 - solutions for data replication and streaming of changes
 - PostgreSQL -> logical decoding (logical replication)
 - MongoDB -> Change Streams
+
+---
+
+
+## Debezium
+
 
 ---
 
