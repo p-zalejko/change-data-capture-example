@@ -98,16 +98,26 @@ Note:
 
 ---
 
-### "Change Streams"
-- solutions for data replication and streaming of changes
-- PostgreSQL -> logical decoding (logical replication)
-- MongoDB -> Change Streams
+## What is common?
+- transaction log file(s)
+- API for streaming changes
 
 ---
 
 
 ## Debezium
 
+![title](assets/img/debezium-arch.png)
+
+[source](https://developers.redhat.com/articles/2021/06/14/application-modernization-patterns-apache-kafka-debezium-and-kubernetes#the_strangler_pattern)
+
+---
+
+## Kafka Connect
+
+![title](assets/img/kafka-connect.png)
+
+[source](https://howtoprogram.xyz/2016/07/10/apache-kafka-connect-example/)
 
 ---
 
