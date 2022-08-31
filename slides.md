@@ -151,6 +151,7 @@ Note:
 - `before` and `after` states in events
 
 ---
+
 ## Debezium/CDC - findings
 
 - "raw" CDC might not be good for business events:
@@ -164,10 +165,12 @@ Note:
 
 ---
 
-## Debezium/CDC - how to fix JOINs
+## Debezium/CDC 
+### how to fix JOINs and events
 
 DEMO
 
 ---
+
 # THANK YOU!
 ## Q&A
