@@ -37,6 +37,8 @@ Note:
 *  two-phase commit protocol (2PC)
 *
 
+---
+
 ## Ok, so what now?
 - avoid transactions? (CQRS, Saga, eventual consitency everywhere...)
 - Change Data Capture
@@ -54,13 +56,13 @@ Note:
 
 ## CDC Tools
 
-- Debezium
+- Debezium (Red Hat)
 - Databus (LinkedIn)
 - DBLog (Netflix)
 - IBM Infosphere 
 - Oracle GoldenGate
 - Talend CDC
-- DynamoDB
+- DynamoDB*
 - Bottled Water(unmaintained)
 
 ---
