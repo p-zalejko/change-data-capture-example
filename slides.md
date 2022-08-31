@@ -52,6 +52,8 @@ Note:
 ## Change Data Capture
 ### 101
 
+![title](assets/img/cdc-010.png)
+
 ---
 
 ## CDC Tools
