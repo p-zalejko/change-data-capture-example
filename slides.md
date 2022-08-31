@@ -78,7 +78,6 @@ Note:
 
 ---
 
-
 ## PostgreSQL
 ### Write-Ahead Logging (WAL)
 
@@ -87,6 +86,7 @@ Note:
 [Write-Ahead Logging (WAL) documentation](https://www.postgresql.org/docs/current/wal-intro.html)
 
 ---
+
 ## PostgreSQL
 ### Logical decoding
 
