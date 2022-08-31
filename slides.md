@@ -71,6 +71,7 @@ Note:
 ---
 
 ## MySQL
+### binary log
 
 > The binary log contains "events" that describe database changes such as table creation operations or changes to table data...
 
@@ -90,7 +91,9 @@ Note:
 ## PostgreSQL
 ### Logical decoding
 
-> Logical decoding is the process of extracting all persistent changes to a database's tables into a coherent, easy to understand format  ... In PostgreSQL, logical decoding is implemented by decoding the contents of the write-ahead log...
+> Logical decoding is the process of extracting all persistent changes to a database's tables into a coherent, easy to understand format  
+
+> In PostgreSQL, logical decoding is implemented by decoding the contents of the write-ahead log...
 
 [Logical Decoding Concepts documentation](https://www.postgresql.org/docs/current/logicaldecoding-explanation.html)
 
