@@ -138,13 +138,36 @@ Note:
 
 ---
 
-## Debezium demo
+## Debezium
 
-
----
-
-## Debezium(CDC) - problems
+### Demo
 
 ---
 
-## 
+## Debezium/CDC - findings
+
+- reliable (no dual writes!)
+- nice tool for integrastion with legacy systems
+- `before` and `after` states in events
+
+---
+## Debezium/CDC - findings
+
+- "raw" CDC might not be good for business events:
+  - events contain everything from tables
+  - each table has its own topic/event
+  - JOINs hard to re-create from events
+  - you need to understand internals of the source service (db)
+  - table schema change causes change of the event schema
+  -
+- 
+
+---
+
+## Debezium/CDC - how to fix JOINs
+
+DEMO
+
+---
+# THANK YOU!
+## Q&A
