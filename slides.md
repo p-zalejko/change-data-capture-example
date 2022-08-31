@@ -80,10 +80,15 @@ Note:
 
 
 ## PostgreSQL
+### Write-Ahead Logging (WAL)
 
 > WAL's central concept is that changes to data files (where tables and indexes reside) must be written only after those changes have been logged, that is, after log records describing the changes have been flushed to permanent storage.
 
 [Write-Ahead Logging (WAL) documentation](https://www.postgresql.org/docs/current/wal-intro.html)
+
+---
+## PostgreSQL
+### Logical decoding
 
 > Logical decoding is the process of extracting all persistent changes to a database's tables into a coherent, easy to understand format  ... In PostgreSQL, logical decoding is implemented by decoding the contents of the write-ahead log...
 
