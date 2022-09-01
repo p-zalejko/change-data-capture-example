@@ -77,7 +77,7 @@ Note:
 - queries on a database (with a `timestamp`)
 - tracking changes in the transaction log
 
-[nice reading](https://datacater.io/blog/2021-09-02/postgresql-cdc-complete-guide.html)
+[here is a nice reading](https://datacater.io/blog/2021-09-02/postgresql-cdc-complete-guide.html)
 
 ---
 
@@ -100,7 +100,7 @@ Note:
 
 > The binary log contains "events" that describe database changes such as table creation operations or changes to table data...
 
-[The Binary Log documentation](https://dev.mysql.com/doc/refman/8.0/en/binary-log.html)
+[Binary Log documentation](https://dev.mysql.com/doc/refman/8.0/en/binary-log.html)
 
 ---
 
@@ -127,12 +127,18 @@ Note:
 ## MongoDB 
 ### opLog 
 
+> The oplog (operations log) is a special capped collection that keeps a rolling record of all operations that modify the data stored in your databases.
+
+[Oplog documentation](https://www.mongodb.com/docs/manual/core/replica-set-oplog/)
+
 ---
 
 ## MongoDB 
 ### Change Streams 
 
- Change Streams
+> Change streams allow applications to access real-time data changes without the complexity and risk of tailing the oplog
+
+[Change Streams documentation](https://www.mongodb.com/docs/manual/changeStreams/)
 
 ---
 
