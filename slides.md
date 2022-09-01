@@ -173,6 +173,7 @@ Note:
 
 - reliable (no dual writes!)
 - nice tool for integrastion with legacy systems
+- data lake and data warehouse
 - `before` and `after` states in events
 
 ---
