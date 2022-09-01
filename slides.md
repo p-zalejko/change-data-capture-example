@@ -171,7 +171,7 @@ Note:
 
 - reliable (no dual writes!)
 - nice tool for integrastion with legacy systems
-- provides data for data lakes and data warehouses
+- can provide data for data lakes and data warehouses
 - `before` and `after` states in events
 
 ---
