@@ -59,7 +59,7 @@ Note:
 ## Change Data Capture
 ### 101
 
-![title](assets/img/money_transfer_process.png)
+![title](assets/img/money_transfer_process2.png)
 
 ---
 
@@ -74,8 +74,8 @@ Note:
 ### How to
 
 - triggers on a database
-- by executing queries on a database (with a `timestamp`)
-- by tracking changes in the transaction log
+- queries on a database (with a `timestamp`)
+- tracking changes in the transaction log
 
 [nice reading](https://datacater.io/blog/2021-09-02/postgresql-cdc-complete-guide.html)
 
@@ -155,14 +155,6 @@ Note:
 
 ---
 
-## Kafka Connect
-
-![title](assets/img/kafka-connect.png)
-
-[source](https://howtoprogram.xyz/2016/07/10/apache-kafka-connect-example/)
-
----
-
 ## Debezium
 
 ### Demo
@@ -173,7 +165,7 @@ Note:
 
 - reliable (no dual writes!)
 - nice tool for integrastion with legacy systems
-- data lake and data warehouse
+- provides data for data lakes and data warehouses
 - `before` and `after` states in events
 
 ---
@@ -186,8 +178,6 @@ Note:
   - JOINs hard to re-create from events
   - you need to understand internals of the source service (db)
   - table schema change causes change of the event schema
-  -
-- 
 
 ---
 
