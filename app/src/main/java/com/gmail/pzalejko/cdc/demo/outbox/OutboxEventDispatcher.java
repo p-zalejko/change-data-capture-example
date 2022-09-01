@@ -23,14 +23,14 @@ public class OutboxEventDispatcher {
     public <T> void dispatch(@NonNull OutboxEvent<T> event) {
         T payload = event.payload();
 
-        Outbox outbox = new Outbox();
+        var outbox = new Outbox();
         outbox.setId(UUID.randomUUID());
         outbox.setAggregateId(event.id());
         outbox.setAggregateType(payload.getClass().getSimpleName());
         outbox.setType(payload.getClass().getSimpleName());
         outbox.setTimestamp(Instant.now());
-        //outbox.setPayload(mapper.writeValueAsBytes(payload));
         outbox.setPayload(mapper.writeValueAsString(payload));
+
         repository.save(outbox);
     }
 
