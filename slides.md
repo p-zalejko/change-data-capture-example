@@ -56,6 +56,31 @@ Note:
 
 ---
 
+## Change Data Capture
+### 101
+
+![title](assets/img/money_transfer_process.png)
+
+---
+
+## Change Data Capture
+### 101
+
+![title](assets/img/money_transfer_process_cdc.png)
+
+---
+
+## Change Data Capture
+### How to
+
+- triggers on a database
+- by executing queries on a database (with a `timestamp`)
+- by tracking changes in the transaction log
+
+[nice reading](https://datacater.io/blog/2021-09-02/postgresql-cdc-complete-guide.html)
+
+---
+
 ## CDC Tools
 
 - Debezium (Red Hat)
