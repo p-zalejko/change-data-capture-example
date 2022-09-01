@@ -8,6 +8,8 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 
+// here, are just longs, not any JOINs...
+// we get 'before' and 'after' state for free
 @Entity
 @Table(indexes = {
         @Index(name = "accountId", columnList = "accountId", unique = true)
@@ -23,7 +25,6 @@ class AccountStateCdc {
     @NotNull
     private String name;
 
-    // here, are just longs, not any JOINs...
     @NotNull
     private Long accountId;
     @NotNull

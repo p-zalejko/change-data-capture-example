@@ -12,6 +12,7 @@ import org.springframework.data.annotation.CreatedDate;
 import java.time.Instant;
 import java.util.UUID;
 
+// table schema is defined by debezium https://debezium.io/documentation/reference/stable/transformations/outbox-event-router.html
 @Entity
 @Immutable
 @Data
@@ -30,9 +31,7 @@ class Outbox {
     @Column(nullable = false)
     private String type;
 
-//    @Lob
-//    @Column(nullable = false)
-//    private byte[] payload;
+    // payload can be anything, String, byte[] etc.
     private String payload;
 
     @CreatedDate
