@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Immutable;
 import org.springframework.data.annotation.CreatedDate;
 
+import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.UUID;
 
@@ -36,6 +37,6 @@ class Outbox {
 
     @CreatedDate
     @Column(updatable = false)
-    private Instant timestamp;
+    private Timestamp timestamp;
 
 }

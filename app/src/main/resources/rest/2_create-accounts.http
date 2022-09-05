@@ -1,3 +1,6 @@
+#
+# launch back-end with the 'tx' profile
+#
 POST http://localhost:8080/accounts
 Content-Type: application/json
 
