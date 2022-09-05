@@ -172,7 +172,9 @@ Note:
 
 - reliable (no dual writes!)
 - nice tool for integrastion with legacy systems
-- can provide data for data lakes and data warehouses
+- ETL (ang. Extract, Transform and Load)
+  - data lakes 
+  - data warehouses
 - `before` and `after` states in events
 
 ---
