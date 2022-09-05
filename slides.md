@@ -91,6 +91,7 @@ Note:
 - Talend CDC
 - DynamoDB*
 - Bottled Water(unmaintained)
+- CDC Connectors for Apache Flink
 
 
 ---
