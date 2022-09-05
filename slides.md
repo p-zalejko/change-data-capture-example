@@ -185,7 +185,7 @@ Note:
   - events contain everything from tables
   - each table has its own topic/event
   - JOINs hard to re-create from events
-  - you need to understand internals of the source service (db)
+  - you need to understand internals of the source service (database)
   - table schema change causes change of the event schema
 
 ---
