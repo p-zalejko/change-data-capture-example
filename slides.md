@@ -149,7 +149,7 @@ Note:
 
 ## What is common?
 - transaction log file(s)
-- API for streaming changes
+- "human-friendly" API for streaming changes
 
 ---
 
