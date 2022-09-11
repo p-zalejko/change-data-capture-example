@@ -30,7 +30,7 @@ public class MoneyTransferService {
         accountRepository.save(from);
         accountRepository.save(to);
 
-        var moneyTransferredEvent = new MoneyTransferredEvent(from.getId(), to.getId(), dto.value, timestamp);
+        var moneyTransferredEvent = new MoneyTransferredEvent(from.getId(), to.getId(), value.doubleValue(), timestamp);
         var fromBalanceChangedEvent = new AccountBalanceChangedEvent(from.getId(), from.getBalance().doubleValue(), timestamp);
         var toBalanceChangedEvent = new AccountBalanceChangedEvent(to.getId(), to.getBalance().doubleValue(), timestamp);
 
