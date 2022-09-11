@@ -20,7 +20,7 @@ public class OutboxEventDispatcher {
     private final ObjectMapper mapper;
 
     @SneakyThrows
-    @Transactional(value = "transactionManager", propagation = Propagation.MANDATORY)
+    @Transactional(propagation = Propagation.MANDATORY)
     public <T> void dispatch(@NonNull OutboxEvent<T> event) {
         T payload = event.payload();
 
