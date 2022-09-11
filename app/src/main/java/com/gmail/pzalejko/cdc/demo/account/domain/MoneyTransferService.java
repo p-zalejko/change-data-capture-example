@@ -23,8 +23,8 @@ public class MoneyTransferService {
 
     // @Transactional
     //@Transactional("chainedKafkaJpaTransactionManager")
-    public void sendMoney(long id, @NonNull SendMoneyDto dto) {
-        var from = accountRepository.findById(id).orElseThrow();
+    public void sendMoney(@NonNull SendMoneyDto dto) {
+        var from = accountRepository.findById(dto.from).orElseThrow();
         var to = accountRepository.findById(dto.to).orElseThrow();
         var value = BigDecimal.valueOf(dto.value); // could be a value object, but it's demo, KISS...
         var timestamp = Instant.now();
@@ -60,6 +60,6 @@ public class MoneyTransferService {
     public record AccountBalanceChangedEvent(long accountId, double value, Instant when) {
     }
 
-    public record SendMoneyDto(long to, double value) {
+    public record SendMoneyDto(long from, long to, double value) {
     }
 }

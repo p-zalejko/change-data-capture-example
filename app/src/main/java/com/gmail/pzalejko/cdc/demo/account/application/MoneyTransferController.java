@@ -14,7 +14,11 @@ class MoneyTransferController {
     private final MoneyTransferService transferService;
 
     @PostMapping("/accounts/{clientId}/{id}/sendMoney")
-    void sendMoney(@PathVariable long id, @RequestBody MoneyTransferService.SendMoneyDto dto) {
-        transferService.sendMoney(id, dto);
+    void sendMoney(@PathVariable long id, @RequestBody SendToDto dto) {
+        transferService.sendMoney(new MoneyTransferService.SendMoneyDto(id, dto.to(), dto.value()));
+    }
+
+    record SendToDto(long to, long value) {
+
     }
 }
