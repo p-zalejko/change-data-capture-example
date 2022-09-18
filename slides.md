@@ -88,9 +88,9 @@ Note:
 - DBLog (Netflix)
 - IBM Infosphere CDC
 - Oracle GoldenGate
+- Bottled Water(unmaintained) (Confluent)
 - Talend CDC
 - DynamoDB stream (AWS)
-- Bottled Water(unmaintained) (Confluent)
 - CDC Connectors for Apache Flink
 
 
