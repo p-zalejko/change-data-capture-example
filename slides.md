@@ -86,11 +86,11 @@ Note:
 - Debezium (Red Hat)
 - Databus (LinkedIn)
 - DBLog (Netflix)
-- IBM Infosphere 
+- IBM Infosphere CDC
 - Oracle GoldenGate
 - Talend CDC
-- DynamoDB*
-- Bottled Water(unmaintained)
+- DynamoDB stream (AWS)
+- Bottled Water(unmaintained) (Confluent)
 - CDC Connectors for Apache Flink
 
 
