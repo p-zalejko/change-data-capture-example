@@ -34,8 +34,8 @@ public class MoneyTransferService {
 
         accountRepository.save(from);
         accountRepository.save(to);
-        accountStateCdcService.updateStateCdc(from);
-        accountStateCdcService.updateStateCdc(to);
+//        accountStateCdcService.updateStateCdc(from);
+//        accountStateCdcService.updateStateCdc(to);
 
         var moneyTransferredEvent = new MoneyTransferredEvent(from.getId(), to.getId(), value.doubleValue(), timestamp);
         var fromBalanceChangedEvent = new AccountBalanceChangedEvent(from.getId(), from.getBalance().doubleValue(), timestamp);
