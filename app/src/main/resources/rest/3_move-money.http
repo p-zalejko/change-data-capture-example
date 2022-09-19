@@ -1,6 +1,8 @@
 #
 # launch back-end with the 'tx' profile
 #
+# REGISTER THE NEW CONNECTOR (FOR THE OUTBOX!)
+#
 
 POST http://localhost:8080/accounts/1/1/sendMoney
 Content-Type: application/json
