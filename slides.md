@@ -86,6 +86,7 @@ Note:
 - Debezium (Red Hat)
 - Databus (LinkedIn)
 - DBLog (Netflix)
+- StorageTapper (Uber)
 - IBM Infosphere CDC
 - Oracle GoldenGate
 - Bottled Water(unmaintained) (Confluent)
