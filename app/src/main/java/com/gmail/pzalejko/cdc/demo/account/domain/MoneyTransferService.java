@@ -1,13 +1,11 @@
 package com.gmail.pzalejko.cdc.demo.account.domain;
 
-import com.gmail.pzalejko.cdc.demo.cdc.AccountStateCdcService;
 import com.gmail.pzalejko.cdc.demo.config.KafkaTopicConfiguration;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -17,7 +15,6 @@ import java.time.Instant;
 public class MoneyTransferService {
 
     private final AccountRepository accountRepository;
-    private final AccountStateCdcService accountStateCdcService;
     private final ApplicationEventPublisher applicationEventPublisher;
     private final KafkaTemplate<String, Object> kafkaTemplate;
 
@@ -34,8 +31,6 @@ public class MoneyTransferService {
 
         accountRepository.save(from);
         accountRepository.save(to);
-//        accountStateCdcService.updateStateCdc(from);
-//        accountStateCdcService.updateStateCdc(to);
 
         var moneyTransferredEvent = new MoneyTransferredEvent(from.getId(), to.getId(), value.doubleValue(), timestamp);
         var fromBalanceChangedEvent = new AccountBalanceChangedEvent(from.getId(), from.getBalance().doubleValue(), timestamp);
