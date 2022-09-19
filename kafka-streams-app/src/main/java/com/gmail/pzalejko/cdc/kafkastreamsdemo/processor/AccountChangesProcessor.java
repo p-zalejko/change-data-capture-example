@@ -68,7 +68,7 @@ public class AccountChangesProcessor {
 
         aggregatedData.toStream()
                 .peek((key, value) -> log.info("Account balance captured: {}", value))
-                .to("demo.accountBalanceState", Produced.with(longKeySerde, accountAggregateSerde));
+                .to("demo.ks.accountBalanceChanged", Produced.with(longKeySerde, accountAggregateSerde));
     }
 
     static class AccountStateJoiner implements ValueJoiner<postgres.demo.account.Envelope, postgres.demo.account_owner.Envelope, AccountAggregate> {
@@ -77,7 +77,7 @@ public class AccountChangesProcessor {
         public AccountAggregate apply(postgres.demo.account.Envelope value1, postgres.demo.account_owner.Envelope value2) {
             return AccountAggregate.newBuilder()
                     .setBalance(value1.getAfter().getBalance().doubleValue())
-                    .setName(value2.getAfter().getName())
+                    .setName(String.format("%s %s", value2.getAfter().getName(), value2.getAfter().getSurname()))
                     .setAccountOwnerId(value1.getAfter().getAccountOwnerId())
                     .setAccountId(value1.getAfter().getId())
                     .build();
