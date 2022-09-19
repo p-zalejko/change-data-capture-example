@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 
 // here, are just longs, not any JOINs...
 // we get 'before' and 'after' state for free
+// be careful with deletes...
 @Entity
 @Table(indexes = {
         @Index(name = "accountId", columnList = "accountId", unique = true)

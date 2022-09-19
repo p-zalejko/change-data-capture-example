@@ -20,11 +20,12 @@ public class AccountStateCdcService {
     }
 
     private AccountStateCdc getAccountStateCdc(Account account) {
+        var accountOwner = account.getAccountOwner();
         return repository.findByAccountId(account.getId())
                 .orElse(new AccountStateCdc(
-                        account.getAccountOwner().getFullName(),
+                        String.format("%s %s", accountOwner.getName(), accountOwner.getSurname()),
                         account.getId(),
-                        account.getAccountOwner().getId())
+                        accountOwner.getId())
                 );
     }
 }

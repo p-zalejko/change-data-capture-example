@@ -33,9 +33,4 @@ public class AccountOwner {
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "accountOwner")
     List<Account> accounts = new ArrayList<>();
-
-    public String getFullName() {
-        return String.format("%s %s", name, surname);
-
-    }
 }
