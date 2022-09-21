@@ -172,7 +172,8 @@ Note:
 ## Debezium/CDC - findings
 
 - reliable (no dual writes!)
-- nice tool for integrastion with legacy systems
+- nice tool for integrating with legacy systems
+- audit logs
 - ETL (ang. Extract, Transform and Load)
   - data lakes 
   - data warehouses
