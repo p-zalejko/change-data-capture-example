@@ -20,6 +20,8 @@ public class MoneyTransferService {
 
     // @Transactional
     //@Transactional("chainedKafkaJpaTransactionManager")
+
+
     public void sendMoney(@NonNull SendMoneyDto dto) {
         var from = accountRepository.findById(dto.from).orElseThrow();
         var to = accountRepository.findById(dto.to).orElseThrow();

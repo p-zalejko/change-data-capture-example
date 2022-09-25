@@ -15,6 +15,6 @@ class AccountController {
 
     @PostMapping("/accounts")
     AccountOwner createAccount(@RequestBody AccountOwnerService.CreateAccountDto dto) {
-        return service.createAccount(dto);
+        return service.createAccountOwner(dto);
     }
 }

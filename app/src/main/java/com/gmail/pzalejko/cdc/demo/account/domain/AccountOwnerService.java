@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 public class AccountOwnerService {
     private final AccountOwnerRepository accountOwnerRepository;
 
-    public AccountOwner createAccount(@NonNull CreateAccountDto dto) {
+    public AccountOwner createAccountOwner(@NonNull CreateAccountDto dto) {
         var newAccount = AccountOwner.newAccountOwner(dto.name, dto.surname, BigDecimal.valueOf(dto.initBalance));
         return accountOwnerRepository.save(newAccount);
     }
