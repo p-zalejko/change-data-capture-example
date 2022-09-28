@@ -194,7 +194,7 @@ Note:
 ---
 
 ## Debezium/CDC 
-### how to fix JOINs and events
+### how to fix JOINs and domain events
 
 DEMO
 
