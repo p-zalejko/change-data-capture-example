@@ -184,6 +184,7 @@ Note:
 ## Debezium/CDC - findings
 
 - "raw" CDC might not be good for business events:
+  - transactions are not "visible" as atomic operations
   - events contain everything from tables
   - each table has its own topic/event
   - JOINs hard to re-create from events
