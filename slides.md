@@ -200,5 +200,12 @@ DEMO
 
 ---
 
+## Outbox without a table
+### PostgreSQL rocks!
+
+![title](assets/img/outbox_wal_directly.png)
+
+---
+
 # THANK YOU!
 ## Q&A
